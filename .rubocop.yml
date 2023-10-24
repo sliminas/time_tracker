@@ -1,0 +1,14 @@
+require:
+  - rubocop-performance
+  - rubocop-rails
+  - rubocop-capybara
+
+AllCops:
+  NewCops: enable
+  TargetRubyVersion: 3.2
+
+Layout/LineLength:
+  Max: 100
+
+Style/Documentation:
+  Enabled: false
