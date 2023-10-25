@@ -13,16 +13,22 @@
           method: :patch,
           class: 'btn btn-primary'
 .row
-  table.table.table-striped.table-bordered
-    thead
-      th Starts at
-      th Ends at
-      th Duration
-      th
+  table.table.table-bordered
     tbody
-      - @times.map do |time|
+      - @times.each_pair.map do |monday, week_times|
         tr
-          td = time.starts_at.to_fs :day_and_time
-          td = time.ends_at&.to_fs(:day_and_time) || 'ongoing...'
-          td = duration_to_hours time.duration
-          td = button_to 'Delete', working_time_path(time), method: :delete, class: 'btn btn-danger'
+          th.bg-secondary-subtle colspan="2" = relative_week monday
+          th.bg-secondary-subtle colspan="2" = summed_duration_to_hours week_times.values.flatten
+        = render 'table_header_row'
+
+        - week_times.map do |day, day_times|
+          tr.table-light
+            th colspan="2" = day.to_fs :week_day
+            th colspan="2" = summed_duration_to_hours day_times
+          - day_times.each do |time|
+            tr
+              td = time.starts_at.to_fs :time
+              td = time.ends_at&.to_fs(:time) || 'ongoing...'
+              td = duration_to_hours time.duration
+              td = button_to 'Delete', working_time_path(time),
+                method: :delete, class: 'btn btn-danger'
