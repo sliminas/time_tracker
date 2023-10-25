@@ -10,7 +10,6 @@
           class: 'btn btn-primary'
       - else
         = button_to 'Finish', working_time_path(@latest_time),
-          params: { working_time: { ends_at: Time.current } },
           method: :patch,
           class: 'btn btn-primary'
 .row

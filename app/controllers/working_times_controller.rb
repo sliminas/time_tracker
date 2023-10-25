@@ -20,7 +20,7 @@ class WorkingTimesController < ApplicationController
 
   def update
     @time = WorkingTime.find(params[:id])
-    @time.update(params.require(:working_time).permit(:ends_at))
+    @time.update(ends_at: params.permit![:ends_at] || Time.current)
 
     redirect_to working_times_path
   end
