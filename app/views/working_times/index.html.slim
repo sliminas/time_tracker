@@ -23,7 +23,7 @@
     tbody
       - @times.map do |time|
         tr
-          td = time.starts_at.to_fs :long
-          td = time.ends_at&.to_fs(:long) || 'ongoing...'
-          td = distance_of_time_in_words time.starts_at, time.ends_at || Time.current
+          td = time.starts_at.to_fs :day_and_time
+          td = time.ends_at&.to_fs(:day_and_time) || 'ongoing...'
+          td = duration_to_hours time.duration
           td = button_to 'Delete', working_time_path(time), method: :delete, class: 'btn btn-danger'
