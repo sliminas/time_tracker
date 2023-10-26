@@ -6,7 +6,6 @@
       - if @latest_time.ends_at?
         = button_to 'Start', working_times_path(WorkingTime.new),
           method: :post,
-          params: { working_time: { starts_at: Time.current } },
           class: 'btn btn-primary'
       - else
         = button_to 'Finish', working_time_path(@latest_time),

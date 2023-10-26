@@ -15,3 +15,7 @@ Style/Documentation:
 
 Metrics/MethodLength:
   Enabled: false
+
+Layout/HashAlignment:
+  EnforcedColonStyle: table
+  EnforcedHashRocketStyle: table
