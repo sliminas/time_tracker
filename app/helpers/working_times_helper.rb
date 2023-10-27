@@ -18,21 +18,33 @@ module WorkingTimesHelper
     end + " / #{date.to_fs(:date)}"
   end
 
-  def summed_duration_to_hours(week_times)
-    duration_to_hours week_times.sum(&:duration)
-  end
-
-  def duration_to_hours(duration)
-    unless duration.is_a?(ActiveSupport::Duration)
-      duration = ActiveSupport::Duration.build(duration)
-    end
-
-    hours = duration.parts[:hours]
-    minutes = duration.parts[:minutes]
+  def duration_to_hours_and_minutes(seconds)
+    duration = to_duration(seconds)
+    hours    = duration.in_hours.floor
+    minutes  = (duration.in_minutes % 60).floor
 
     [
-      ("#{hours}h" if hours),
-      ("#{minutes}min" if minutes)
+      ("#{hours}h" if hours.positive?),
+      ("#{minutes}min" if minutes.positive?)
     ].compact.join(' ').presence || '0min'
+  end
+
+  def week_duration_background(seconds)
+    hours_per_week = WorkingTime::HOURS_PER_WEEK
+
+    case to_duration(seconds).in_hours
+    when 0..(hours_per_week - 1)
+      'bg-warning'
+    when (hours_per_week - 1)..(hours_per_week + 1)
+      'bg-success'
+    else
+      'bg-danger'
+    end
+  end
+
+  private
+
+  def to_duration(seconds)
+    ActiveSupport::Duration.build(seconds)
   end
 end
