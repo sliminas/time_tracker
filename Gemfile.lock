@@ -102,6 +102,7 @@ GEM
     debug (1.8.0)
       irb (>= 1.5.0)
       reline (>= 0.3.1)
+    diff-lcs (1.5.0)
     drb (2.1.1)
       ruby2_keywords
     erubi (1.12.0)
@@ -116,9 +117,6 @@ GEM
     irb (1.8.3)
       rdoc
       reline (>= 0.3.8)
-    jbuilder (2.11.5)
-      actionview (>= 5.0.0)
-      activesupport (>= 5.0.0)
     json (2.6.3)
     language_server-protocol (3.17.0.3)
     loofah (2.21.4)
@@ -203,14 +201,27 @@ GEM
     rake (13.0.6)
     rdoc (6.5.0)
       psych (>= 4.0.0)
-    redis (5.0.8)
-      redis-client (>= 0.17.0)
-    redis-client (0.17.1)
-      connection_pool
     regexp_parser (2.8.2)
     reline (0.3.9)
       io-console (~> 0.5)
     rexml (3.2.6)
+    rspec-core (3.12.2)
+      rspec-support (~> 3.12.0)
+    rspec-expectations (3.12.3)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.12.0)
+    rspec-mocks (3.12.6)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.12.0)
+    rspec-rails (6.0.3)
+      actionpack (>= 6.1)
+      activesupport (>= 6.1)
+      railties (>= 6.1)
+      rspec-core (~> 3.12)
+      rspec-expectations (~> 3.12)
+      rspec-mocks (~> 3.12)
+      rspec-support (~> 3.12)
+    rspec-support (3.12.1)
     rubocop (1.57.1)
       base64 (~> 0.1.1)
       json (~> 2.3)
@@ -287,21 +298,19 @@ DEPENDENCIES
   cssbundling-rails
   debug
   importmap-rails
-  jbuilder
   propshaft
   puma (>= 5.0)
   rails (~> 7.1.1)
-  redis (>= 4.0.1)
+  rspec-rails
   rubocop
   rubocop-capybara
   rubocop-performance
   rubocop-rails
   selenium-webdriver
-  slim-rails (~> 3.6)
+  slim-rails
   sqlite3 (~> 1.4)
   stimulus-rails
   turbo-rails
-  tzinfo-data
   web-console
 
 RUBY VERSION
