@@ -12,31 +12,30 @@
           method: :patch,
           class: 'btn btn-primary'
 .row
-  .col
-    table.table.table-bordered
-      tbody
-        - @times.each_pair.each do |monday, week_times|
-          tr
-            th.bg-dark-subtle colspan="2" = relative_week monday
-            - week_duration = week_times.values.flatten.sum(&:duration)
-            th class=week_duration_background(week_duration) colspan="2"
-              = duration_to_hours_and_minutes week_duration
+  - @times.each_pair.each do |monday, week_times|
+    .col-6.cell.bg-dark-subtle = relative_week monday
+    - week_duration = week_times.values.flatten.sum(&:duration)
+    .col-6.cell class=week_duration_background(week_duration)
+      = duration_to_hours_and_minutes week_duration
 
-          = render 'table_header_row'
+    .col-3.cell Starts at
+    .col-3.cell Ends at
+    .col-3.cell Duration
+    .col-3.cell
 
-          - week_times.each do |day, day_times|
-            tr
-              th.bg-secondary-subtle colspan="2" = day.to_fs :week_day
-              th.bg-secondary-subtle colspan="2"
-                = duration_to_hours_and_minutes day_times.sum(&:duration)
 
-            - day_times.each do |time|
-              tr id=dom_id(time) is='turbo-frame'
-                td = time.starts_at.to_fs :time
-                td = time.ends_at&.to_fs(:time) || "ongoing... (#{time.duration})"
-                td = duration_to_hours_and_minutes time.duration
-                td.d-flex.gap-2.justify-content-center
-                  = button_to 'Edit', edit_working_time_path(time),
-                    method: :get, class: 'btn btn-primary'
-                  = button_to 'X', working_time_path(time),
-                    method: :delete, class: 'btn btn-danger'
+    - week_times.each do |day, day_times|
+      .col-6.cell.bg-secondary-subtle = day.to_fs :week_day
+      .col-6.cell.bg-secondary-subtle= duration_to_hours_and_minutes day_times.sum(&:duration)
+
+      - day_times.each do |time|
+        = turbo_frame_tag time
+          .row
+            .col-3.cell = time.starts_at.to_fs :time
+            .col-3.cell = time.ends_at&.to_fs(:time) || "ongoing... (#{time.duration})"
+            .col-3.cell = duration_to_hours_and_minutes time.duration
+            .col-3.cell.d-flex.gap-2.justify-content-center
+              = link_to 'Edit', edit_working_time_path(time),
+                method: :get, class: 'btn btn-primary'
+              = button_to 'X', working_time_path(time),
+                method: :delete, class: 'btn btn-danger'
