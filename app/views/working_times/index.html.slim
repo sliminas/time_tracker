@@ -1,7 +1,7 @@
 .row.mb-3
   .d-flex.flex-row.gap-2
     div
-      = link_to 'New', new_working_time_path, class: 'btn btn-primary'
+      = link_to 'New', new_working_time_path, class: 'btn btn-secondary'
     div
       - if @latest_time.ends_at?
         = button_to 'Start', working_times_path(WorkingTime.new),
@@ -15,7 +15,7 @@
   .col
     table.table.table-bordered
       tbody
-        - @times.each_pair.map do |monday, week_times|
+        - @times.each_pair.each do |monday, week_times|
           tr
             th.bg-dark-subtle colspan="2" = relative_week monday
             - week_duration = week_times.values.flatten.sum(&:duration)
@@ -24,16 +24,19 @@
 
           = render 'table_header_row'
 
-          - week_times.map do |day, day_times|
+          - week_times.each do |day, day_times|
             tr
               th.bg-secondary-subtle colspan="2" = day.to_fs :week_day
               th.bg-secondary-subtle colspan="2"
                 = duration_to_hours_and_minutes day_times.sum(&:duration)
 
             - day_times.each do |time|
-              tr
+              tr id=dom_id(time) is='turbo-frame'
                 td = time.starts_at.to_fs :time
-                td = time.ends_at&.to_fs(:time) || 'ongoing...'
+                td = time.ends_at&.to_fs(:time) || "ongoing... (#{time.duration})"
                 td = duration_to_hours_and_minutes time.duration
-                td = button_to 'Delete', working_time_path(time),
-                  method: :delete, class: 'btn btn-danger'
+                td.d-flex.gap-2.justify-content-center
+                  = button_to 'Edit', edit_working_time_path(time),
+                    method: :get, class: 'btn btn-primary'
+                  = button_to 'X', working_time_path(time),
+                    method: :delete, class: 'btn btn-danger'

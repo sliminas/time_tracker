@@ -14,6 +14,10 @@ class WorkingTimesController < ApplicationController
     @time = WorkingTime.new
   end
 
+  def edit
+    time
+  end
+
   def create
     @time = WorkingTime.new(
       starts_at: working_time_params[:starts_at] || Time.current,
@@ -26,20 +30,22 @@ class WorkingTimesController < ApplicationController
   end
 
   def update
-    @time = WorkingTime.find(params[:id])
-    @time.update(ends_at: working_time_params[:ends_at] || Time.current)
+    time.update(ends_at: working_time_params[:ends_at] || Time.current)
 
     redirect_to working_times_path
   end
 
   def destroy
-    @time = WorkingTime.find(params[:id])
-    @time.destroy
+    time.destroy
 
     redirect_to working_times_path
   end
 
   private
+
+  def time
+    @time = WorkingTime.find(params[:id])
+  end
 
   def working_time_params
     params.permit!

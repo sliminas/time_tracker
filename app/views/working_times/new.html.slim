@@ -1,13 +1,4 @@
 
 h1 New Working Time
 
-= form_for @time do |f|
-  .row.g-3
-    .col-1
-      div= f.label :starts_at, class: 'form-label'
-      div= f.label :ends_at, class: 'form-label'
-    .col-3
-      = f.datetime_field :starts_at, class: 'form-control'
-      = f.datetime_field :ends_at, class: 'form-control'
-    .col-3
-      = f.submit 'Save', class: 'btn btn-primary'
+= render 'form'
