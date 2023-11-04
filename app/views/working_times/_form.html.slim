@@ -1,11 +1,8 @@
 = form_for @time do |f|
-  .row.g-3
-    .col-1
-      div= f.label :starts_at, class: 'form-label'
-      div= f.label :ends_at, class: 'form-label'
-    .col-3
-      = f.datetime_field :starts_at, include_seconds: false, class: 'form-control'
-      = f.datetime_field :ends_at, include_seconds: false, class: 'form-control'
   .row
-    .col-3
+    .col-3.cell = f.datetime_field :starts_at, include_seconds: false, class: 'form-control'
+    .col-3.cell = f.datetime_field :ends_at, include_seconds: false, class: 'form-control'
+    .col-3.cell
+    .col-3.cell.d-flex.gap-2.justify-content-center
       = f.submit 'Save', class: 'btn btn-primary'
+      = link_to 'Cancel', root_path, class: 'btn btn-secondary'
