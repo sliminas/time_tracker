@@ -1,28 +1,30 @@
-.row.mb-3
-  .d-flex.flex-row.gap-2
-    div
-      = link_to 'New', new_working_time_path, class: 'btn btn-secondary'
-    div
-      - if @latest_time.ends_at?
-        = button_to 'Start', working_times_path(WorkingTime.new),
-          method: :post,
-          class: 'btn btn-primary'
-      - else
-        = button_to 'Finish', working_time_path(@latest_time),
-          method: :patch,
-          class: 'btn btn-primary'
+= turbo_frame_tag WorkingTime.new
+  .row
+    .col-9.cell
+    .col-3.cell.d-flex.flex-row.gap-2.justify-content-center
+      div
+        = link_to 'New', new_working_time_path, class: 'btn btn-secondary'
+      div
+        - if @latest_time.ends_at?
+          = button_to 'Start', working_times_path(WorkingTime.new),
+            method: :post,
+            class: 'btn btn-primary'
+        - else
+          = button_to 'Finish', working_time_path(@latest_time),
+            method: :patch,
+            class: 'btn btn-primary'
+
 .row
   - @times.each_pair.each do |monday, week_times|
-    .col-6.cell.bg-dark-subtle = relative_week monday
-    - week_duration = week_times.values.flatten.sum(&:duration)
-    .col-6.cell class=week_duration_background(week_duration)
-      = duration_to_hours_and_minutes week_duration
-
     .col-3.cell Starts at
     .col-3.cell Ends at
     .col-3.cell Duration
     .col-3.cell
 
+    .col-6.cell.bg-dark-subtle = relative_week monday
+    - week_duration = week_times.values.flatten.sum(&:duration)
+    .col-6.cell class=week_duration_background(week_duration)
+      = duration_to_hours_and_minutes week_duration
 
     - week_times.each do |day, day_times|
       .col-6.cell.bg-secondary-subtle = day.to_fs :week_day
