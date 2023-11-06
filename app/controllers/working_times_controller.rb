@@ -38,13 +38,15 @@ class WorkingTimesController < ApplicationController
   def destroy
     time.destroy
 
-    redirect_to working_times_path
+    respond_to do |format|
+      format.turbo_stream { render turbo_stream: turbo_stream.remove(time) }
+    end
   end
 
   private
 
   def time
-    @time = WorkingTime.find(params[:id])
+    @time ||= WorkingTime.find(params[:id])
   end
 
   def working_time_params

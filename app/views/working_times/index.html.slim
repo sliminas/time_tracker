@@ -8,11 +8,13 @@
         - if @latest_time.ends_at?
           = button_to 'Start', working_times_path(WorkingTime.new),
             method: :post,
-            class: 'btn btn-primary'
+            class: 'btn btn-primary',
+           'data-turbo-frame': '_top'
         - else
           = button_to 'Finish', working_time_path(@latest_time),
             method: :patch,
-            class: 'btn btn-primary'
+            class: 'btn btn-primary',
+            'data-turbo-frame': '_top'
 
 .row
   - @times.each_pair.each do |monday, week_times|
@@ -34,7 +36,7 @@
         = turbo_frame_tag time
           .row
             .col-3.cell = time.starts_at.to_fs :time
-            .col-3.cell = time.ends_at&.to_fs(:time) || "ongoing... (#{time.duration})"
+            .col-3.cell = time.ends_at&.to_fs(:time) || 'ongoing'
             .col-3.cell = duration_to_hours_and_minutes time.duration
             .col-3.cell.d-flex.gap-2.justify-content-center
               = link_to 'Edit', edit_working_time_path(time),
