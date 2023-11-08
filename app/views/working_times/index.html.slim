@@ -3,26 +3,25 @@
     .col-9.cell
     .col-3.cell.d-flex.flex-row.gap-2.justify-content-center
       div
-        = link_to 'New', new_working_time_path, class: 'btn btn-secondary'
+        = link_to 'New', new_working_time_path, class: 'btn btn-primary'
       div
         - if @latest_time.ends_at?
           = button_to 'Start', working_times_path(WorkingTime.new),
             method: :post,
-            class: 'btn btn-primary',
+            class: 'btn btn-success',
            'data-turbo-frame': '_top'
         - else
           = button_to 'Finish', working_time_path(@latest_time),
             method: :patch,
-            class: 'btn btn-primary',
+            class: 'btn btn-success',
             'data-turbo-frame': '_top'
 
 .row
+  .col-3.cell Starts at
+  .col-3.cell Ends at
+  .col-3.cell Duration
+  .col-3.cell
   - @times.each_pair.each do |monday, week_times|
-    .col-3.cell Starts at
-    .col-3.cell Ends at
-    .col-3.cell Duration
-    .col-3.cell
-
     .col-6.cell.bg-dark-subtle = relative_week monday
     - week_duration = week_times.values.flatten.sum(&:duration)
     .col-6.cell class=week_duration_background(week_duration)
@@ -36,7 +35,8 @@
         = turbo_frame_tag time
           .row
             .col-3.cell = time.starts_at.to_fs :time
-            .col-3.cell = time.ends_at&.to_fs(:time) || 'ongoing'
+            .col-3.cell class="#{'bg-success-subtle' unless time.ends_at}"
+              = time.ends_at&.to_fs(:time) || 'ongoing...'
             .col-3.cell = duration_to_hours_and_minutes time.duration
             .col-3.cell.d-flex.gap-2.justify-content-center
               = link_to 'Edit', edit_working_time_path(time),
