@@ -5,4 +5,4 @@
     .col-3.cell
     .col-3.cell.d-flex.gap-2.justify-content-center
       = link_to 'Cancel', root_path, class: 'btn btn-secondary'
-      = f.submit 'Save', class: 'btn btn-primary'
+      = f.submit 'Save', class: 'btn btn-primary', 'data-turbo-frame': '_top'

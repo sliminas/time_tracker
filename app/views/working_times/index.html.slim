@@ -43,5 +43,7 @@
             .col-3.cell.d-flex.gap-2.justify-content-center
               = link_to 'Edit', edit_working_time_path(time),
                 method: :get, class: 'btn btn-primary'
+
               = button_to 'X', working_time_path(time),
-                method: :delete, class: 'btn btn-danger'
+                method: :delete, class: 'btn btn-danger',
+                'data-turbo-confirm': 'Are you sure?'
