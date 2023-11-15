@@ -39,9 +39,7 @@ class WorkingTimesController < ApplicationController
   def destroy
     time.destroy
 
-    respond_to do |format|
-      format.turbo_stream { render turbo_stream: turbo_stream.remove(time) }
-    end
+    redirect_to working_times_path
   end
 
   private
