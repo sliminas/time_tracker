@@ -1,6 +1,8 @@
 = turbo_frame_tag WorkingTime.new
   .row
-    .col-9.cell
+    .col-9.cell.align-items-center.d-flex
+      | Balance:
+      =< duration_to_hours_and_minutes WorkingTime.balance
     .col-3.cell.d-flex.flex-row.gap-2.justify-content-center
       div
         = link_to 'New', new_working_time_path, class: 'btn btn-primary'

@@ -3,6 +3,7 @@
 class WorkingTimesController < ApplicationController
   def index
     @latest_time = WorkingTime.order(starts_at: :desc).first
+
     @times = WorkingTime.order(starts_at: :desc)
                         .group_by { _1.starts_at.beginning_of_week }
                         .transform_values do |week_working_times|

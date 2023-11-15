@@ -33,12 +33,12 @@ module WorkingTimesHelper
     hours_per_week = WorkingTime::HOURS_PER_WEEK
 
     case to_duration(seconds).in_hours
-    when 0..(hours_per_week - 1)
+    when ..(hours_per_week - 2)
       'bg-warning'
-    when (hours_per_week - 1)..(hours_per_week + 1)
-      'bg-success'
-    else
+    when ((hours_per_week + 2)..)
       'bg-danger'
+    else
+      'bg-success'
     end
   end
 
