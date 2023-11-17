@@ -31,7 +31,10 @@ class WorkingTimesController < ApplicationController
   end
 
   def update
-    time.update(ends_at: working_time_params[:ends_at] || Time.current)
+    time.update(
+      starts_at: working_time_params[:starts_at],
+      ends_at:   working_time_params[:ends_at] || Time.current
+    )
 
     redirect_to working_times_path
   end
