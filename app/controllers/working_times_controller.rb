@@ -32,7 +32,7 @@ class WorkingTimesController < ApplicationController
 
   def update
     time.update(
-      starts_at: working_time_params[:starts_at],
+      starts_at: working_time_params[:starts_at] || time.starts_at,
       ends_at:   working_time_params[:ends_at] || Time.current
     )
 
