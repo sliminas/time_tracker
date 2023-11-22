@@ -1,0 +1,23 @@
+/ dialog data-turbo-confirm-target="dialog" class="hidden"
+/   div data-form="destroy" class="animated fadeIn fixed inset-0 overflow-y-auto flex items-center justify-center"
+/     form method="dialog" class="max-h-screen w-full max-w-lg relative flex justify-center"
+/       div class="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6"
+/         div class="sm:flex sm:items-start"
+/           div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left"
+/             h3 class="text-lg leading-6 font-medium text-gray-900" data-turbo-confirm-target="title"
+/             div class="mt-2"
+/               p class="text-sm text-gray-500" data-turbo-confirm-target="body"
+/         div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse"
+/           button data-turbo-confirm-target="confirmButton" value="confirm" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
+/           button data-turbo-confirm-target="cancelButton" value="cancel" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm"
+
+#exampleModal.modal tabindex="-1" aria-hidden="true" data-turbo-confirm-target="dialog"
+  .modal-dialog
+    .modal-content
+      .modal-header
+        h1.modal-title.fs-5 data-turbo-confirm-target="title" Modal title
+        button.btn-close type="button" data-bs-dismiss="modal" aria-label="Close"
+      .modal-body data-turbo-confirm-target="body" modal content
+      .modal-footer
+        button.btn.btn-secondary type="button" data-bs-dismiss="modal" data-turbo-confirm-target="confirmButton" Close
+        button.btn.btn-primary type="button" data-turbo-confirm-target="cancelButton" Save changes

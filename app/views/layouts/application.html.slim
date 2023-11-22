@@ -10,8 +10,10 @@ html
     = stylesheet_link_tag "custom", "data-turbo-track": "reload"
     = javascript_importmap_tags
 
-  body
+  body data-controller= "turbo-confirm"
     .container
       nav.navbar.mb-2.border-bottom
         = link_to 'Working times', root_path, class: 'navbar-brand'
       = yield
+
+    = render 'shared/turbo_destroy_modal'
