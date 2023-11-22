@@ -40,7 +40,7 @@ export default class extends Controller {
       this.confirmButtonTarget.innerText = confirmText || this.confirmTextValue
       this.cancelButtonTarget.innerText = cancelText || this.cancelTextValue
 
-      const modal = new bootstrap.Modal('#exampleModal')
+      const modal = new bootstrap.Modal(this.dialogTarget)
 
       modal.show()
       // this.dialogTarget.classList.remove('hidden')
