@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 
 // Connects to data-controller="turbo-confirm"
 export default class extends Controller {
-  static targets = ["dialog", "title", "body", "confirmButton", "cancelButton"]
+  static targets = ["dialog", "modal", "title", "body", "confirmButton", "cancelButton"]
   static values = {
     title: {
       type: String,
@@ -40,19 +40,16 @@ export default class extends Controller {
       this.confirmButtonTarget.innerText = confirmText || this.confirmTextValue
       this.cancelButtonTarget.innerText = cancelText || this.cancelTextValue
 
-      const modal = new bootstrap.Modal(this.dialogTarget)
+      this.modalTarget.classList.add("d-block")
+      this.dialogTarget.showModal()
 
-      modal.show()
-      // this.dialogTarget.classList.remove('hidden')
-
-      // this.dialogTarget.showModal()
-
-      // return new Promise((resolve, reject) => {
-      //   this.dialogTarget.addEventListener("close", () => {
-      //     // this.dialogTarget.classList.add('hidden')
-      //     resolve(this.dialogTarget.returnValue === "confirm")
-      //   }, { once: true })
-      // })
+      return new Promise((resolve, reject) => {
+        this.dialogTarget.addEventListener(
+          "close",
+          () => resolve(this.dialogTarget.returnValue === "confirm"),
+          { once: true }
+        )
+      })
     })
   }
 }
