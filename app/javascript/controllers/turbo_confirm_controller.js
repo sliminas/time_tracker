@@ -12,11 +12,11 @@ export default class extends Controller {
       type: String,
       default: "This action can't be undone"
     },
-    confirmText: {
+    confirmLabel: {
       type: String,
       default: "Confirm"
     },
-    cancelText: {
+    cancelLabel: {
       type: String,
       default: "Cancel"
     }
@@ -31,22 +31,26 @@ export default class extends Controller {
       let {
         confirmTitle,
         confirmBody,
-        confirmText,
-        cancelText
+        confirmVariant,
+        confirmLabel,
+        cancelLabel
       } = element.dataset
 
       this.titleTarget.innerText = confirmTitle || this.titleValue
       this.bodyTarget.innerText = confirmBody || this.bodyValue
-      this.confirmButtonTarget.innerText = confirmText || this.confirmTextValue
-      this.cancelButtonTarget.innerText = cancelText || this.cancelTextValue
+      this.confirmButtonTarget.innerText = confirmLabel || this.confirmLabelValue
+      this.cancelButtonTarget.innerText = cancelLabel || this.cancelLabelValue
 
-      this.modalTarget.classList.add("d-block")
-      this.dialogTarget.showModal()
+      const confirmButtonClass = confirmVariant === 'primary' ? 'btn-primary' : 'btn-danger'
+      this.confirmButtonTarget.classList.add(confirmButtonClass)
 
-      return new Promise((resolve, reject) => {
-        this.dialogTarget.addEventListener(
-          "close",
-          () => resolve(this.dialogTarget.returnValue === "confirm"),
+      const modal = new bootstrap.Modal(this.dialogTarget)
+      modal.show()
+
+      return new Promise((resolve, _reject) => {
+        this.confirmButtonTarget.addEventListener(
+          "click",
+          () => resolve(true),
           { once: true }
         )
       })
