@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   get 'up' => 'rails/health#show', as: :rails_health_check
 
   resources :working_times, only: %i[index new edit update create destroy]
+  resources :day_offs, only: %i[new create]
 
   # Defines the root path route ("/")
   root 'working_times#index'

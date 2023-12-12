@@ -1,0 +1,9 @@
+= turbo_frame_tag @time
+  = form_with model: @time, url: day_offs_path do |f|
+    .row
+      .col-3.cell
+      .col-3.cell
+      .col-3.cell = f.date_field :starts_at, class: 'form-control'
+      .col-3.cell.d-flex.gap-2.justify-content-center
+        = link_to 'Cancel', root_path, class: 'btn btn-secondary'
+        = f.submit 'Save', class: 'btn btn-primary', 'data-turbo-frame': '_top'

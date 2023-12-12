@@ -5,6 +5,8 @@
       =< duration_to_hours_and_minutes WorkingTime.balance
     .col-3.cell.d-flex.flex-row.gap-2.justify-content-center
       div
+        = link_to 'Day off', new_day_off_path, class: 'btn btn-secondary'
+      div
         = link_to 'New', new_working_time_path, class: 'btn btn-primary'
       div
         - if @latest_time.ends_at?
