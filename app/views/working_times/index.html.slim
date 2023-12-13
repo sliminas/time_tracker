@@ -9,7 +9,7 @@
       div
         = link_to 'New', new_working_time_path, class: 'btn btn-primary'
       div
-        - if @latest_time.ends_at?
+        - if !@latest_time || @latest_time.ends_at?
           = button_to 'Start', working_times_path(WorkingTime.new),
             method: :post,
             class: 'btn btn-success',
