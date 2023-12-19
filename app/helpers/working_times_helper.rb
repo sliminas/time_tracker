@@ -20,11 +20,11 @@ module WorkingTimesHelper
 
   def duration_to_hours_and_minutes(seconds)
     duration = to_duration(seconds)
-    hours    = duration.in_hours.floor
-    minutes  = (duration.in_minutes % 60).floor
+    hours    = duration.in_hours.abs.floor
+    minutes  = (duration.in_minutes.abs % 60).floor
 
     [
-      ("#{hours}h" if hours.positive?),
+      ("#{'-' if duration.negative?}#{hours}h" unless hours.zero?),
       ("#{minutes}min" if minutes.positive?)
     ].compact.join(' ').presence || '0min'
   end

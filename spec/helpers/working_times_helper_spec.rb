@@ -30,6 +30,11 @@ RSpec.describe WorkingTimesHelper do
       let(:duration) { 140.minutes }
       it { is_expected.to eq '2h 20min' }
     end
+
+    context 'with negative duration' do
+      let(:duration) { -140.minutes }
+      it { is_expected.to eq '-2h 20min' }
+    end
   end
 
   describe '#relative_week' do
