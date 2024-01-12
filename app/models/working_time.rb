@@ -11,8 +11,9 @@ class WorkingTime < ApplicationRecord
     worked_hours = all.sum(&:duration)
     return 0 if worked_hours.zero?
 
-    supposed_hours_full_week = all.group_by(&:week_date).count * HOURS_PER_WEEK.hours
-    remaining_hours_for_current_week = (DAYS_PER_WEEK - Date.current.wday) * HOURS_PER_DAY.hours
+    supposed_hours_full_week         = all.group_by(&:week_date).count * HOURS_PER_WEEK.hours
+    week_day                         = [Date.current.wday, 4].min
+    remaining_hours_for_current_week = (DAYS_PER_WEEK - week_day) * HOURS_PER_DAY.hours
 
     worked_hours - supposed_hours_full_week + remaining_hours_for_current_week
   end
