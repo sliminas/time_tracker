@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 
 // Connects to data-controller="turbo-confirm"
 export default class extends Controller {
-  static targets = ["dialog", "modal", "title", "body", "confirmButton", "cancelButton"]
+  static targets = ["dialog", "backdrop", "modal", "title", "body", "confirmButton", "cancelButton"]
   static values = {
     title: {
       type: String,
@@ -26,6 +26,11 @@ export default class extends Controller {
     this.setupDialog()
   }
 
+  toggleModal() {
+    this.dialogTarget.classList.toggle("hidden")
+    this.backdropTarget.classList.toggle("hidden")
+  }
+
   setupDialog() {
     Turbo.setConfirmMethod((_, element) => {
       let {
@@ -41,11 +46,10 @@ export default class extends Controller {
       this.confirmButtonTarget.innerText = confirmLabel || this.confirmLabelValue
       this.cancelButtonTarget.innerText = cancelLabel || this.cancelLabelValue
 
-      const confirmButtonClass = confirmVariant === 'primary' ? 'btn-primary' : 'btn-danger'
+      const confirmButtonClass = confirmVariant === 'primary' ? 'btn--primary' : 'btn--danger'
       this.confirmButtonTarget.classList.add(confirmButtonClass)
 
-      const modal = new bootstrap.Modal(this.dialogTarget)
-      modal.show()
+      this.toggleModal()
 
       return new Promise((resolve, _reject) => {
         this.confirmButtonTarget.addEventListener(
