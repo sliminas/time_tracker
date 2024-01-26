@@ -1,8 +1,7 @@
-= form_for @time do |f|
-  .row
-    .col-3.cell = f.datetime_field :starts_at, include_seconds: false, class: 'form-control'
-    .col-3.cell = f.datetime_field :ends_at, include_seconds: false, class: 'form-control'
-    .col-3.cell
-    .col-3.cell.d-flex.gap-2.justify-content-center
-      = link_to 'Cancel', root_path, class: 'btn btn-secondary'
-      = f.submit 'Save', class: 'btn btn-primary', 'data-turbo-frame': '_top'
+= form_for @time, html: { class: 'grid-cols-subgrid grid col-start-1 col-end-5' } do |f|
+  .col-start-1.cell = f.datetime_field :starts_at, include_seconds: false, class: 'form-control'
+  .col-start-2.cell = f.datetime_field :ends_at, include_seconds: false, class: 'form-control'
+  .col-start-3.cell
+  .col-start-4.cell.flex.gap-2.justify-center
+    = link_to 'Cancel', root_path, class: 'btn btn--secondary'
+    = f.submit 'Save', class: 'btn btn--primary', 'data-turbo-frame': '_top'

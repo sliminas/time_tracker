@@ -1,23 +1,23 @@
-= turbo_frame_tag WorkingTime.new
-  .flex.justify-between.text-sm.items-center
-    .cell.items-center.flex
+.w-full.text-left.grid.grid-cols-4.text-sm.divide-y.divide-gray-100.border-t.border-gray-100
+  = turbo_frame_tag WorkingTime.new, class: 'grid-cols-subgrid grid col-start-1 col-end-5'
+    .cell.col-start-1
       | Balance:
       =< duration_to_hours_and_minutes WorkingTime.balance
-    .btn-group
-      = link_to 'Day off', new_day_off_path, class: 'btn-group__btn'
-      = link_to 'New', new_working_time_path, class: 'btn-group__btn'
-      - if !@latest_time || @latest_time.ends_at?
-        = button_to 'Start', working_times_path(WorkingTime.new),
-          method: :post,
-          class: 'btn-group__btn',
-         'data-turbo-frame': '_top'
-      - else
-        = button_to 'Stop', working_time_path(@latest_time),
-          method: :patch,
-          class: 'btn-group__btn',
-          'data-turbo-frame': '_top'
+    .col-start-4.flex.items-center.justify-center
+      .btn-group
+        - if !@latest_time || @latest_time.ends_at?
+          = button_to 'Start', working_times_path(WorkingTime.new),
+            method: :post,
+            class: 'btn-group__btn btn--success',
+           'data-turbo-frame': '_top'
+        - else
+          = button_to 'Stop', working_time_path(@latest_time),
+            method: :patch,
+            class: 'btn-group__btn btn--success',
+            'data-turbo-frame': '_top'
+        = link_to 'New', new_working_time_path, class: 'btn-group__btn btn--primary'
+        = link_to 'Day off', new_day_off_path, class: 'btn-group__btn btn--secondary'
 
-.w-full.text-left.grid.grid-cols-4.text-sm.divide-y.divide-gray-100.border-t.border-gray-100
   .cell.bg-gray-100 Starts at
   .cell.bg-gray-100 Ends at
   .cell.bg-gray-100 Duration
@@ -36,16 +36,17 @@
       - day_times.each do |time|
         = turbo_frame_tag time, class: 'grid grid-cols-subgrid col-start-1 col-end-5'
           .cell.col-start-1 = time.starts_at.to_fs :time
-          .cell.col-start-2 class="#{'bg-success-subtle' unless time.ends_at}"
-            = time.ends_at&.to_fs(:time) || 'ongoing...'
+          .cell.col-start-2
+            span class="#{'rounded-full bg-red-50 px-2 py-1 text-xs font-semibold text-red-600' unless time.ends_at}"
+              = time.ends_at&.to_fs(:time) || 'ongoing'
           .cell.col-start-3 = duration_to_hours_and_minutes time.duration
           .cell.col-start-4.flex.gap-2.justify-center
             = link_to 'Edit', edit_working_time_path(time),
-              method: :get, class: 'btn btn--xs'
+              method: :get, class: 'btn btn--xs btn--primary'
 
             = button_to 'X', working_time_path(time),
               method: :delete,
-              class: 'btn btn--xs btn-danger',
+              class: 'btn btn--xs btn--danger',
               'data-turbo-confirm': 'true',
               'data-turbo-frame': '_top',
               form: { 'data-confirm-body': "Are you sure you want to delete this working time?",

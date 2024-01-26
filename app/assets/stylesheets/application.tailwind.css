@@ -5,7 +5,22 @@
 
 @layer components {
   .btn {
-    @apply rounded-lg border border-gray-300 bg-white px-5 py-2.5 text-center text-sm font-medium text-gray-700 shadow-sm transition-all hover:bg-gray-100 focus:ring focus:ring-gray-100 disabled:cursor-not-allowed disabled:border-gray-100 disabled:bg-gray-50 disabled:text-gray-400;
+    @apply rounded-lg border px-5 py-2.5 text-center text-sm font-medium shadow-sm transition-all focus:ring disabled:cursor-not-allowed;
+  }
+
+  .btn--primary {
+    @apply border-primary-500 bg-primary-500 text-white hover:border-primary-700 hover:bg-primary-700 focus:ring-primary-200 disabled:border-primary-300 disabled:bg-primary-300;
+  }
+  .btn--secondary {
+    @apply border-gray-300 text-gray-700 bg-white text-gray-700 hover:bg-gray-100 focus:ring-gray-100 disabled:border-gray-100 disabled:bg-gray-50 disabled:text-gray-400;
+  }
+
+  .btn--success {
+    @apply border-green-500 bg-green-500 text-white hover:border-green-700 hover:bg-green-700 focus:ring-green-200 disabled:border-green-300 disabled:bg-green-300;
+  }
+  .btn--danger {
+    @apply border-red-500 bg-red-500 text-white hover:border-red-700 hover:bg-red-700  focus:ring-red-200 disabled:border-red-300 disabled:bg-red-300
+    ;
   }
 
   .btn.btn--sm {
@@ -20,7 +35,7 @@
   }
 
   .btn-group__btn {
-    @apply bg-white px-4 py-2.5 text-center text-sm font-medium text-secondary-700 hover:bg-gray-100;
+    @apply px-4 py-2.5 text-center text-sm font-medium;
   }
 
   .cell {
