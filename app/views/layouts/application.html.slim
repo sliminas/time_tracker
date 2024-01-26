@@ -6,14 +6,13 @@ html
     = csrf_meta_tags
     = csp_meta_tag
 
-    = stylesheet_link_tag "application", "data-turbo-track": "reload"
-    = stylesheet_link_tag "custom", "data-turbo-track": "reload"
+    = stylesheet_link_tag "tailwind", "data-turbo-track": "reload"
     = javascript_importmap_tags
 
   body data-controller= "turbo-confirm"
-    .container
-      nav.navbar.mb-2.border-bottom
-        = link_to 'Working times', root_path, class: 'navbar-brand'
+    .m-4
+      nav.mb-4
+        = link_to 'Working times', root_path, class: 'btn'
       = yield
 
     = render 'shared/turbo_confirm_modal'

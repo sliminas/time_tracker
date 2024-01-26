@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer components {
+  .btn {
+    @apply rounded-lg border border-gray-300 bg-white px-5 py-2.5 text-center text-sm font-medium text-gray-700 shadow-sm transition-all hover:bg-gray-100 focus:ring focus:ring-gray-100 disabled:cursor-not-allowed disabled:border-gray-100 disabled:bg-gray-50 disabled:text-gray-400;
+  }
+
+  .btn.btn--sm {
+    @apply px-4 py-2 text-sm;
+  }
+  .btn.btn--xs {
+    @apply px-3 py-1.5 text-xs;
+  }
+
+  .btn-group {
+    @apply inline-flex -space-x-0 divide-x divide-gray-300 overflow-hidden rounded-lg border border-gray-300 shadow-sm;
+  }
+
+  .btn-group__btn {
+    @apply bg-white px-4 py-2.5 text-center text-sm font-medium text-secondary-700 hover:bg-gray-100;
+  }
+
+  .cell {
+    @apply px-6 py-4 font-medium text-gray-900 flex items-center;
+  }
+}
+
+.grid-cols-subgrid {
+  grid-template-columns: subgrid;
+}

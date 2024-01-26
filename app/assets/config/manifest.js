@@ -7,3 +7,4 @@
 
 //= link application.css
 //= link custom.css
+//= link_tree ../builds

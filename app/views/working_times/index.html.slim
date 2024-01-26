@@ -1,55 +1,52 @@
 = turbo_frame_tag WorkingTime.new
-  .row
-    .col-9.cell.align-items-center.d-flex
+  .flex.justify-between.text-sm.items-center
+    .cell.items-center.flex
       | Balance:
       =< duration_to_hours_and_minutes WorkingTime.balance
-    .col-3.cell.d-flex.flex-row.gap-2.justify-content-center
-      div
-        = link_to 'Day off', new_day_off_path, class: 'btn btn-secondary'
-      div
-        = link_to 'New', new_working_time_path, class: 'btn btn-primary'
-      div
-        - if !@latest_time || @latest_time.ends_at?
-          = button_to 'Start', working_times_path(WorkingTime.new),
-            method: :post,
-            class: 'btn btn-success',
-           'data-turbo-frame': '_top'
-        - else
-          = button_to 'Stop', working_time_path(@latest_time),
-            method: :patch,
-            class: 'btn btn-success',
-            'data-turbo-frame': '_top'
+    .btn-group
+      = link_to 'Day off', new_day_off_path, class: 'btn-group__btn'
+      = link_to 'New', new_working_time_path, class: 'btn-group__btn'
+      - if !@latest_time || @latest_time.ends_at?
+        = button_to 'Start', working_times_path(WorkingTime.new),
+          method: :post,
+          class: 'btn-group__btn',
+         'data-turbo-frame': '_top'
+      - else
+        = button_to 'Stop', working_time_path(@latest_time),
+          method: :patch,
+          class: 'btn-group__btn',
+          'data-turbo-frame': '_top'
 
-.row
-  .col-3.cell Starts at
-  .col-3.cell Ends at
-  .col-3.cell Duration
-  .col-3.cell
+.w-full.text-left.grid.grid-cols-4.text-sm.divide-y.divide-gray-100.border-t.border-gray-100
+  .cell.bg-gray-100 Starts at
+  .cell.bg-gray-100 Ends at
+  .cell.bg-gray-100 Duration
+  .cell.bg-gray-100
   - @times.each_pair.each do |monday, week_times|
-    .col-6.cell.bg-dark-subtle = relative_week monday
+    .cell.bg-gray-300 = relative_week monday
+    div
     - week_duration = week_times.values.flatten.sum(&:duration)
-    .col-6.cell class=week_duration_background(week_duration)
+    .cell.col-span-2 class=week_duration_background(week_duration)
       = duration_to_hours_and_minutes week_duration
 
     - week_times.each do |day, day_times|
-      .col-6.cell.bg-secondary-subtle = day.to_fs :week_day
-      .col-6.cell.bg-secondary-subtle= duration_to_hours_and_minutes day_times.sum(&:duration)
+      .cell.col-span-2.bg-gray-100 = day.to_fs :week_day
+      .cell.col-span-2.bg-gray-100= duration_to_hours_and_minutes day_times.sum(&:duration)
 
       - day_times.each do |time|
-        = turbo_frame_tag time
-          .row
-            .col-3.cell = time.starts_at.to_fs :time
-            .col-3.cell class="#{'bg-success-subtle' unless time.ends_at}"
-              = time.ends_at&.to_fs(:time) || 'ongoing...'
-            .col-3.cell = duration_to_hours_and_minutes time.duration
-            .col-3.cell.d-flex.gap-2.justify-content-center
-              = link_to 'Edit', edit_working_time_path(time),
-                method: :get, class: 'btn btn-primary'
+        = turbo_frame_tag time, class: 'grid grid-cols-subgrid col-start-1 col-end-5'
+          .cell.col-start-1 = time.starts_at.to_fs :time
+          .cell.col-start-2 class="#{'bg-success-subtle' unless time.ends_at}"
+            = time.ends_at&.to_fs(:time) || 'ongoing...'
+          .cell.col-start-3 = duration_to_hours_and_minutes time.duration
+          .cell.col-start-4.flex.gap-2.justify-center
+            = link_to 'Edit', edit_working_time_path(time),
+              method: :get, class: 'btn btn--xs'
 
-              = button_to 'X', working_time_path(time),
-                method: :delete,
-                class: 'btn btn-danger',
-                'data-turbo-confirm': 'true',
-                'data-turbo-frame': '_top',
-                form: { 'data-confirm-body': "Are you sure you want to delete this working time?",
-                        'data-confirm-label': "Delete" }
+            = button_to 'X', working_time_path(time),
+              method: :delete,
+              class: 'btn btn--xs btn-danger',
+              'data-turbo-confirm': 'true',
+              'data-turbo-frame': '_top',
+              form: { 'data-confirm-body': "Are you sure you want to delete this working time?",
+                      'data-confirm-label': "Delete" }
