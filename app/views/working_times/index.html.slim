@@ -1,9 +1,9 @@
 .w-full.text-left.grid.grid-cols-4.text-sm.divide-y.divide-gray-100.border-t.border-gray-100
   = turbo_frame_tag WorkingTime.new, class: 'grid-cols-subgrid grid col-start-1 col-end-5'
-    .cell.col-start-1
-      | Balance:
-      =< duration_to_hours_and_minutes WorkingTime.balance
-    .col-start-4.flex.items-center.justify-center
+    .cell.col-start-1.rounded-md.bg-primary-50.p-4.text-sm.text-primary-500.flex.gap-2
+      = 'Balance:'
+      span.font-bold = duration_to_hours_and_minutes WorkingTime.balance
+    .cell.col-start-4.flex.items-center.justify-center
       .btn-group
         - if !@latest_time || @latest_time.ends_at?
           = button_to 'Start', working_times_path(WorkingTime.new),
@@ -42,11 +42,11 @@
           .cell.col-start-3 = duration_to_hours_and_minutes time.duration
           .cell.col-start-4.flex.gap-2.justify-center
             = link_to 'Edit', edit_working_time_path(time),
-              method: :get, class: 'btn btn--xs btn--primary'
+              method: :get, class: 'btn btn--sm btn--primary'
 
             = button_to 'X', working_time_path(time),
               method: :delete,
-              class: 'btn btn--xs btn--danger',
+              class: 'btn btn--sm btn--danger',
               'data-turbo-confirm': 'true',
               'data-turbo-frame': '_top',
               form: { 'data-confirm-body': "Are you sure you want to delete this working time?",

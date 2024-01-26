@@ -34,11 +34,11 @@ module WorkingTimesHelper
 
     case to_duration(seconds).in_hours
     when ..(hours_per_week - 2)
-      'bg-warning'
+      'bg-yellow-400'
     when ((hours_per_week + 2)..)
-      'bg-danger'
+      'bg-red-500'
     else
-      'bg-success'
+      'bg-lime-500'
     end
   end
 
