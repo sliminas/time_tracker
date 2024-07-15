@@ -5,7 +5,14 @@ class WorkingTime < ApplicationRecord
   DAYS_PER_WEEK  = 4
   HOURS_PER_WEEK = HOURS_PER_DAY * DAYS_PER_WEEK
 
+  has_many :tag_working_times, dependent: :destroy
+  has_many :tags, through: :tag_working_times
+
   validates :starts_at, presence: true
+
+  def self.tag_with(name)
+    tags.find_or_create_by(name:)
+  end
 
   def self.balance
     worked_hours = all.sum(&:duration)
