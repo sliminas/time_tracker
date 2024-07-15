@@ -10,10 +10,6 @@ class WorkingTime < ApplicationRecord
 
   validates :starts_at, presence: true
 
-  def self.tag_with(name)
-    tags.find_or_create_by(name:)
-  end
-
   def self.balance
     worked_hours = all.sum(&:duration)
     return 0 if worked_hours.zero?
@@ -31,5 +27,9 @@ class WorkingTime < ApplicationRecord
 
   def week_date
     starts_at.beginning_of_week
+  end
+
+  def tag_with(name)
+    tags.find_or_create_by(name:)
   end
 end

@@ -43,7 +43,9 @@
             span class="#{'rounded-full bg-red-50 px-2 py-1 text-xs font-semibold text-red-600' unless time.ends_at}"
               = time.ends_at&.to_fs(:time) || 'ongoing'
           .cell.col-start-3 = duration_to_hours_and_minutes time.duration
-          .cell.col-start-4 = time.tags.map(&:name).join(', ')
+          .cell.col-start-4
+            - time.tags.each do |tag|
+              span.rounded-full.bg-green-50.px-2.py-1.text-xs.font-semibold.text-green-600 = tag.name
           .cell.col-start-5.flex.gap-2.justify-center
             = link_to 'Edit', edit_working_time_path(time),
               method: :get, class: 'btn btn--sm btn--primary'
