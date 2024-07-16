@@ -20,14 +20,14 @@ RSpec.describe WorkingTime do
         create(:working_time, starts_at:, ends_at: starts_at + worked_hours.hours)
       end
 
-      context 'with early time' do
+      context 'with less time than planned' do
         let(:worked_hours) { 5 }
 
-        it { is_expected.to eq(-3) }
+        it { is_expected.to eq(-3.5) }
       end
 
-      context 'with exact time' do
-        let(:worked_hours) { 8 }
+      context 'with expected time' do
+        let(:worked_hours) { 8.5 }
 
         it { is_expected.to eq(0) }
       end
@@ -35,7 +35,7 @@ RSpec.describe WorkingTime do
       context 'with overtime' do
         let(:worked_hours) { 10 }
 
-        it { is_expected.to eq(2) }
+        it { is_expected.to eq(1.5) }
       end
 
       context 'with working time on Tuesday of same week' do
@@ -47,20 +47,20 @@ RSpec.describe WorkingTime do
           allow(Date).to receive(:current).and_return(tuesday.to_date)
         end
 
-        context 'with early time' do
+        context 'with less time than planned' do
           let(:worked_hours) { 5 }
 
-          it { is_expected.to eq(-4) }
+          it { is_expected.to eq(-5) }
         end
 
-        context 'with exact time' do
-          let(:worked_hours) { 8 }
+        context 'with expected time' do
+          let(:worked_hours) { 8.5 }
 
-          it { is_expected.to eq(-1) }
+          it { is_expected.to eq(-1.5) }
         end
 
         context 'with overtime' do
-          let(:worked_hours) { 10 }
+          let(:worked_hours) { 11 }
 
           it { is_expected.to eq(1) }
         end
