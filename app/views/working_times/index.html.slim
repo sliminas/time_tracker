@@ -5,16 +5,10 @@
       span.font-bold = duration_to_hours_and_minutes WorkingTime.balance
     .cell.col-start-5.flex.items-center.justify-center
       .btn-group
-        - if !@latest_time || @latest_time.ends_at?
-          = button_to 'Start', working_times_path(WorkingTime.new),
-            method: :post,
-            class: 'btn-group__btn btn--success',
-           'data-turbo-frame': '_top'
-        - else
-          = button_to 'Stop', working_time_path(@latest_time),
-            method: :patch,
-            class: 'btn-group__btn btn--success',
-            'data-turbo-frame': '_top'
+        = button_to 'Start', working_times_path(WorkingTime.new),
+          method: :post,
+          class: 'btn-group__btn btn--success',
+         'data-turbo-frame': '_top'
         = link_to 'New', new_working_time_path, class: 'btn-group__btn btn--primary'
         = link_to 'Day off', new_day_off_path, class: 'btn-group__btn btn--secondary'
 
@@ -47,6 +41,11 @@
             - time.tags.each do |tag|
               span.rounded-full.bg-green-50.px-2.py-1.text-xs.font-semibold.text-green-600 = tag.name
           .cell.col-start-5.flex.gap-2.justify-center
+            - if !time.ends_at
+              = button_to 'Stop', working_time_path(time),
+                method: :patch,
+                class: 'btn btn--success',
+                'data-turbo-frame': '_top'
             = link_to 'Edit', edit_working_time_path(time),
               method: :get, class: 'btn btn--sm btn--primary'
 
