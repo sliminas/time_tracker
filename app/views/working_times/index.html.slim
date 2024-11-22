@@ -3,7 +3,7 @@
     .cell.col-start-1.rounded-md.bg-primary-50.p-4.text-sm.text-primary-500.flex.gap-2
       = 'Balance:'
       span.font-bold = duration_to_hours_and_minutes WorkingTime.balance
-    .cell.col-start-5.flex.items-center.justify-center
+    .cell.col-start-4.col-span-2.flex.items-center
       .btn-group
         = button_to 'Start', working_times_path(WorkingTime.new),
           method: :post,
@@ -15,8 +15,9 @@
   .cell.bg-gray-100 Starts at
   .cell.bg-gray-100 Ends at
   .cell.bg-gray-100 Duration
-  .cell.bg-gray-100 Tags
   .cell.bg-gray-100
+  .cell.bg-gray-100 Tags
+
   - @times.each_pair.each do |monday, week_times|
     .cell.bg-gray-300 = relative_week monday
     .bg-gray-300
@@ -37,10 +38,7 @@
             span class="#{'rounded-full bg-red-50 px-2 py-1 text-xs font-semibold text-red-600' unless time.ends_at}"
               = time.ends_at&.to_fs(:time) || 'ongoing'
           .cell.col-start-3 = duration_to_hours_and_minutes time.duration
-          .cell.col-start-4
-            - time.tags.each do |tag|
-              span.rounded-full.bg-green-50.px-2.py-1.text-xs.font-semibold.text-green-600 = tag.name
-          .cell.col-start-5.flex.gap-2.justify-center
+          .cell.col-start-4.flex.gap-2
             - if !time.ends_at
               = button_to 'Stop', working_time_path(time),
                 method: :patch,
@@ -56,3 +54,6 @@
               'data-turbo-frame': '_top',
               form: { 'data-confirm-body': "Are you sure you want to delete this working time?",
                       'data-confirm-label': "Delete" }
+          .cell.col-start-5
+            - time.tags.each do |tag|
+              span.rounded-full.bg-green-50.px-2.py-1.text-xs.font-semibold.text-green-600 = tag.name

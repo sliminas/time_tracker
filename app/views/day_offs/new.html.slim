@@ -4,7 +4,6 @@
               html:  { class: 'grid-cols-subgrid grid col-start-1 col-end-6' } do |f|
     .col-start-1.cell
     .col-start-2.cell
-    .col-start-3.cell
-    .col-start-4.cell = f.date_field :starts_at, class: 'input'
-    .col-start-5.cell.flex.justify-center
+    .col-start-3.cell = f.date_field :starts_at, class: 'input'
+    .col-start-4.cell.flex
       = render 'shared/form_buttons', form: f
