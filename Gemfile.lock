@@ -138,6 +138,7 @@ GEM
     mini_portile2 (2.8.8)
     minitest (5.20.0)
     msgpack (1.7.2)
+    mutex_m (0.3.0)
     net-imap (0.5.1)
       date
       net-protocol
@@ -151,6 +152,8 @@ GEM
     nokogiri (1.15.4)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
+    observer (0.1.2)
+    ostruct (0.6.3)
     parallel (1.23.0)
     parser (3.2.2.4)
       ast (~> 2.4.1)
@@ -314,6 +317,9 @@ DEPENDENCIES
   debug
   factory_bot_rails
   importmap-rails
+  mutex_m
+  observer
+  ostruct
   propshaft
   puma (>= 5.0)
   rails (>= 8.0)
