@@ -1,0 +1,6 @@
+development:
+  adapter: sqlite3
+  pool: 5
+  timeout: 5000
+  username: stephan
+  database: db/time_tracker_development
