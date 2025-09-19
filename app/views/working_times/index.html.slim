@@ -5,10 +5,17 @@
       span.font-bold = duration_to_hours_and_minutes WorkingTime.balance
     .cell.col-start-4.col-span-2.flex.items-center
       .btn-group
-        = button_to 'Start', working_times_path(WorkingTime.new),
-          method: :post,
+        ruby:
+          label, path, method =
+            if @first_time.ongoing?
+              ['Stop', working_time_path(@first_time), :patch]
+            else
+              ['Start', working_times_path(WorkingTime.new), :post]
+            end
+        = button_to label, path,
+          method:,
           class: 'btn-group__btn btn--success',
-         'data-turbo-frame': '_top'
+          'data-turbo-frame': '_top'
         = link_to 'New', new_working_time_path, class: 'btn-group__btn btn--primary'
         = link_to 'Day off', new_day_off_path, class: 'btn-group__btn btn--secondary'
 
@@ -39,11 +46,6 @@
               = time.ends_at&.to_fs(:time) || 'ongoing'
           .cell.col-start-3 = duration_to_hours_and_minutes time.duration
           .cell.col-start-4.flex.gap-2
-            - if !time.ends_at
-              = button_to 'Stop', working_time_path(time),
-                method: :patch,
-                class: 'btn btn--success',
-                'data-turbo-frame': '_top'
             = link_to 'Edit', edit_working_time_path(time),
               method: :get, class: 'btn btn--sm btn--primary'
 

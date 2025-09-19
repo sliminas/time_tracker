@@ -21,6 +21,10 @@ class WorkingTime < ApplicationRecord
     worked_hours - supposed_hours_full_week + remaining_hours_for_current_week
   end
 
+  def ongoing?
+    ends_at.nil?
+  end
+
   def duration
     (ends_at || Time.current) - starts_at
   end

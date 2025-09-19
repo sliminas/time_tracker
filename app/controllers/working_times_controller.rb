@@ -2,10 +2,11 @@
 
 class WorkingTimesController < ApplicationController
   def index
-    @times = WorkingTime.includes(:tags)
-                        .order(starts_at: :desc)
-                        .group_by { _1.starts_at.beginning_of_week }
-                        .transform_values do |week_working_times|
+    times = WorkingTime.includes(:tags).order(starts_at: :desc)
+    @first_time = times.first
+    @times = times
+             .group_by { _1.starts_at.beginning_of_week }
+             .transform_values do |week_working_times|
       week_working_times.group_by { |working_time| working_time.starts_at.beginning_of_day }
     end
   end

@@ -11,6 +11,7 @@
 /.env*
 !/.env*.erb
 
+db/time_tracker_development
 # Ignore all logfiles and tempfiles.
 /log/*
 /tmp/*
