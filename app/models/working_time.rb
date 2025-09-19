@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class WorkingTime < ApplicationRecord
-  HOURS_PER_DAY  = 8.5
+  HOURS_PER_DAY  = 8.2
   DAYS_PER_WEEK  = 4
   HOURS_PER_WEEK = HOURS_PER_DAY * DAYS_PER_WEEK
 
