@@ -6,18 +6,25 @@
     .cell.col-start-4.col-span-2.flex.items-center
       .btn-group
         ruby:
-          label, path, method =
-            if @first_time.ongoing?
-              ['Stop', working_time_path(@first_time), :patch]
+          label, path, method, klass =
+            if @first_time&.ongoing?
+              ['Stop', working_time_path(@first_time), :patch, "btn--danger"]
             else
-              ['Start', working_times_path(WorkingTime.new), :post]
+              ['Start', working_times_path(WorkingTime.new), :post, "btn--success"]
             end
         = button_to label, path,
           method:,
-          class: 'btn-group__btn btn--success',
+          class: "btn-group__btn #{klass}",
           'data-turbo-frame': '_top'
         = link_to 'New', new_working_time_path, class: 'btn-group__btn btn--primary'
         = link_to 'Day off', new_day_off_path, class: 'btn-group__btn btn--secondary'
+        = button_to 'Clear all times', destroy_all_working_times_path,
+          method: :delete,
+          class: 'btn-group__btn btn--danger',
+          'data-turbo-confirm': 'true',
+          'data-turbo-frame': '_top',
+          form: { 'data-confirm-body': "Are you sure you want to delete all working times?",
+                  'data-confirm-label': "Delete" }
 
   .cell.bg-gray-100 Starts at
   .cell.bg-gray-100 Ends at
@@ -39,10 +46,10 @@
       .cell.col-span-3.bg-gray-100= duration_to_hours_and_minutes day_times.sum(&:duration)
 
       - day_times.each do |time|
-        = turbo_frame_tag time, class: 'grid grid-cols-subgrid col-start-1 col-end-6'
+        = turbo_frame_tag time, class: "grid grid-cols-subgrid col-start-1 col-end-6 #{'bg-red-50' if time.ongoing?}"
           .cell.col-start-1 = time.starts_at.to_fs :time
           .cell.col-start-2
-            span class="#{'rounded-full bg-red-50 px-2 py-1 text-xs font-semibold text-red-600' unless time.ends_at}"
+            span class="#{'rounded-full bg-red-50 px-2 py-1 text-xs font-semibold text-red-600' if time.ongoing?}"
               = time.ends_at&.to_fs(:time) || 'ongoing'
           .cell.col-start-3 = duration_to_hours_and_minutes time.duration
           .cell.col-start-4.flex.gap-2

@@ -46,6 +46,11 @@ class WorkingTimesController < ApplicationController
     redirect_to working_times_path
   end
 
+  def destroy_all
+    WorkingTime.delete_all
+    redirect_to working_times_path
+  end
+
   private
 
   def time
