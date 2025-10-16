@@ -48,7 +48,7 @@ gem 'bootsnap', require: false
 
 # gem 'dartsass-sprockets'
 # gem 'sprockets-rails'
-gem 'tailwindcss-rails'
+gem 'tailwindcss-rails', '< 4'
 
 # Use Active Storage variants
 # [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
