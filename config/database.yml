@@ -1,6 +1,13 @@
-development:
+default: &default
   adapter: sqlite3
   pool: 5
   timeout: 5000
   username: stephan
+
+development:
+  <<: *default
   database: db/time_tracker_development
+
+test:
+  <<: *default
+  database: db/time_tracker_test

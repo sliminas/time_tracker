@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class WorkingTime < ApplicationRecord
-  HOURS_PER_DAY  = 8.2
-  DAYS_PER_WEEK  = 4
+  HOURS_PER_DAY  = ENV.fetch('HOURS_PER_DAY', 8.2).to_f
+  DAYS_PER_WEEK  = ENV.fetch('DAYS_PER_WEEK', 5).to_f
   HOURS_PER_WEEK = HOURS_PER_DAY * DAYS_PER_WEEK
 
   has_many :tag_working_times, dependent: :destroy
@@ -15,7 +15,7 @@ class WorkingTime < ApplicationRecord
     return 0 if worked_hours.zero?
 
     supposed_hours_full_week         = all.group_by(&:week_date).count * HOURS_PER_WEEK.hours
-    week_day                         = [Date.current.wday, 4].min
+    week_day                         = [Date.current.wday, DAYS_PER_WEEK].min
     remaining_hours_for_current_week = (DAYS_PER_WEEK - week_day) * HOURS_PER_DAY.hours
 
     worked_hours - supposed_hours_full_week + remaining_hours_for_current_week

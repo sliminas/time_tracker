@@ -1,8 +1,12 @@
 .w-full.text-left.grid.grid-cols-5.text-sm.divide-y.divide-gray-100.border-t.border-gray-100
   = turbo_frame_tag WorkingTime.new, class: 'grid-cols-subgrid grid col-start-1 col-end-6'
-    .cell.col-start-1.rounded-md.bg-primary-50.p-4.text-sm.text-primary-500.flex.gap-2
-      = 'Balance:'
-      span.font-bold = duration_to_hours_and_minutes WorkingTime.balance
+    .cell.col-start-1.rounded-md.bg-primary-50.p-4.text-sm.text-primary-500.flex-col.gap-2.items-start
+      .flex.gap-2
+        = 'Hours/week with break:'
+        span.font-bold = WorkingTime::HOURS_PER_WEEK
+      .flex.gap-2
+        = 'Balance:'
+        span.font-bold = duration_to_hours_and_minutes WorkingTime.balance
     .cell.col-start-4.col-span-2.flex.items-center
       .btn-group
         ruby:
