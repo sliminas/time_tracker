@@ -31,6 +31,11 @@ RSpec.describe WorkingTimesHelper do
       it { is_expected.to eq '2h 20min' }
     end
 
+    context 'with hours and minutes' do
+      let(:duration) { -3480.0 }
+      it { is_expected.to eq '-58min' }
+    end
+
     context 'with negative duration' do
       let(:duration) { -140.minutes }
       it { is_expected.to eq '-2h 20min' }

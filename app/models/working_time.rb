@@ -11,14 +11,17 @@ class WorkingTime < ApplicationRecord
   validates :starts_at, presence: true
 
   def self.balance
-    worked_hours = all.sum(&:duration)
-    return 0 if worked_hours.zero?
+    worked_time = all.sum(&:duration)
+    return 0 if worked_time.zero?
 
-    supposed_hours_full_week         = all.group_by(&:week_date).count * HOURS_PER_WEEK.hours
-    week_day                         = [Date.current.wday, DAYS_PER_WEEK].min
-    remaining_hours_for_current_week = (DAYS_PER_WEEK - week_day) * HOURS_PER_DAY.hours
+    week_day                 = [[Time.current.wday, DAYS_PER_WEEK].min, 1].max
+    remaining_time_for_week = ((DAYS_PER_WEEK - week_day) * HOURS_PER_DAY) * 3600
 
-    worked_hours - supposed_hours_full_week + remaining_hours_for_current_week
+    worked_time + remaining_time_for_week - supposed_time_until_end_of_week
+  end
+
+  def self.supposed_time_until_end_of_week
+    (all.group_by(&:week_date).count * HOURS_PER_WEEK) * 3600
   end
 
   def ongoing?
@@ -26,7 +29,7 @@ class WorkingTime < ApplicationRecord
   end
 
   def duration
-    (ends_at || Time.current) - starts_at
+    (ends_at || Time.current).to_i - starts_at.to_i
   end
 
   def week_date

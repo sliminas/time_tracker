@@ -23,10 +23,11 @@ module WorkingTimesHelper
     hours    = duration.in_hours.abs.floor
     minutes  = (duration.in_minutes.abs % 60).floor
 
+    prefix = duration.negative? && !(minutes.zero? && hours.zero?) ? '-' : ''
     [
-      ("#{'-' if duration.negative?}#{hours}h" unless hours.zero?),
+      ("#{hours}h" unless hours.zero?),
       ("#{minutes}min" if minutes.positive?)
-    ].compact.join(' ').presence || '0min'
+    ].compact.join(' ').prepend(prefix).presence || '0min'
   end
 
   def week_duration_background(seconds)
