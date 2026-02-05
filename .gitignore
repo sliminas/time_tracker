@@ -41,3 +41,4 @@
 /node_modules
 
 /db/time_tracker_*
+/db/time_tracker_development
