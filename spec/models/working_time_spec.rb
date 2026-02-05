@@ -85,10 +85,6 @@ RSpec.describe WorkingTime do
                starts_at:Time.zone.local(2026, 2,3, 8,49),
                ends_at: Time.zone.local(2026, 2,3, 16,3))
       end
-      # let!(:working_time4) do
-      #   create(:working_time, starts_at:Time.zone.local(2026, 2,2, 17,1),
-      #          ends_at: Time.zone.local(2026, 2,2, 18,2))
-      # end
       before { allow(Time).to receive(:current).and_return(Time.zone.local(2026, 2,3)) }
 
       # worked = 7:12 + 0:59 + 7:13 = 15:24
@@ -97,6 +93,16 @@ RSpec.describe WorkingTime do
       # remaining for week = 41 - 15:24 = 25:36
       # balance tuesday = 15:24 - 8:12 - 8:12 = -1
       it { is_expected.to eq("-58min") }
+
+      context "with additional time on tuesday" do
+        let!(:tuesday2) do
+          create(:working_time,
+                 starts_at:Time.zone.local(2026, 2,2, 17,1),
+                 ends_at: Time.zone.local(2026, 2,2, 18,2))
+        end
+
+        it { is_expected.to eq("3min") }
+      end
     end
   end
 end
