@@ -14,7 +14,7 @@ class WorkingTime < ApplicationRecord
     worked_time = all.sum(&:duration)
     return 0 if worked_time.zero?
 
-    week_day                 = [[Time.current.wday, DAYS_PER_WEEK].min, 1].max
+    week_day = Time.current.wday.clamp(1, DAYS_PER_WEEK)
     remaining_time_for_week = ((DAYS_PER_WEEK - week_day) * HOURS_PER_DAY) * 3600
 
     worked_time + remaining_time_for_week - supposed_time_until_end_of_week

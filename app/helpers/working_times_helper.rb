@@ -24,6 +24,11 @@ module WorkingTimesHelper
     minutes  = (duration.in_minutes.abs % 60).floor
 
     prefix = duration.negative? && !(minutes.zero? && hours.zero?) ? '-' : ''
+
+    format_time(prefix, hours, minutes)
+  end
+
+  def format_time(prefix, hours, minutes)
     [
       ("#{hours}h" unless hours.zero?),
       ("#{minutes}min" if minutes.positive?)
