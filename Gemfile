@@ -2,7 +2,7 @@
 
 source 'https://rubygems.org'
 
-ruby File.read('.ruby-version').chomp
+ruby File.read('.ruby-version').delete("ruby-").chomp
 
 gem 'rails', '>= 8.0'
 
