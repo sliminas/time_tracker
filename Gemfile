@@ -13,6 +13,7 @@ gem 'sqlite3'
 # Use the Puma web server [https://github.com/puma/puma]
 gem 'puma', '>= 5.0'
 
+gem 'dotenv'
 gem 'mutex_m'
 gem 'observer'
 gem 'ostruct'
